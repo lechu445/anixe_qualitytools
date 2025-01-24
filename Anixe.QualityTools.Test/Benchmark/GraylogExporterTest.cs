@@ -28,8 +28,8 @@ WorkloadResult  12: 536870912 op, 3215100.00 ns, 0.0060 ns/op
 WorkloadResult  13: 536870912 op, 4805000.00 ns, 0.0090 ns/op
 WorkloadResult  14: 536870912 op, 10553200.00 ns, 0.0197 ns/op
 WorkloadResult  15: 536870912 op, 0.00 ns, 0.0000 ns/op
-GC:  100 10 1 528 50
-Threading:  0 0 536870912";
+// GC:  100 10 1 528 50
+// Threading:  0 0 536870912";
 
       const string barBenchmarkResult = @"// AfterActualRun
 WorkloadResult   1: 536870912 op, 10285200.00 ns, 0.0192 ns/op
@@ -47,8 +47,8 @@ WorkloadResult  12: 536870912 op, 0.00 ns, 0.0000 ns/op
 WorkloadResult  13: 536870912 op, 0.00 ns, 0.0000 ns/op
 WorkloadResult  14: 536870912 op, 3069800.00 ns, 0.0057 ns/op
 WorkloadResult  15: 536870912 op, 8841100.00 ns, 0.0165 ns/op
-GC:  200 20 2 528 60
-Threading:  0 0 536870912";
+// GC:  200 20 2 528 60
+// Threading:  0 0 536870912";
 
       var benchmarkResults = new[] { fooBenchmarkResult, barBenchmarkResult };
       var consoleLogger = new SimpleConsoleLogger();

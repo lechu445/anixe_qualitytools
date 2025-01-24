@@ -61,15 +61,15 @@ namespace Anixe.QualityTools.Benchmark
         {
           try
           {
-            Dictionary<string, object> log;
+            Dictionary<string, object?> log;
             if (r.Success)
             {
-              log = new Dictionary<string, object>
+              log = new Dictionary<string, object?>
               {
                 { "short_message", r.BenchmarkCase.DisplayInfo },
                 { "host", this.HostName },
-                { "_time_taken_median_ns", r.ResultStatistics.Median },
-                { "_time_taken_mean_ns", r.ResultStatistics.Mean },
+                { "_time_taken_median_ns", r.ResultStatistics?.Median },
+                { "_time_taken_mean_ns", r.ResultStatistics?.Mean },
                 { "_bytes_allocated", r.GcStats.GetBytesAllocatedPerOperation(r.BenchmarkCase) },
                 { "_gen0_collections", r.GcStats.Gen0Collections },
                 { "_gen1_collections", r.GcStats.Gen1Collections },
@@ -83,7 +83,7 @@ namespace Anixe.QualityTools.Benchmark
             }
             else
             {
-              log = new Dictionary<string, object>
+              log = new Dictionary<string, object?>
               {
                 { "short_message", $"Benchmark test {r.BenchmarkCase.DisplayInfo} failed" },
                 { "host", this.HostName },

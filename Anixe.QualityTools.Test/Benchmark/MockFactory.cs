@@ -5,7 +5,6 @@ using BenchmarkDotNet.Toolchains;
 using BenchmarkDotNet.Toolchains.Results;
 using BenchmarkDotNet.Validators;
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
@@ -31,16 +30,17 @@ namespace Anixe.QualityTools.Test.Benchmark
 
     private static BenchmarkReport CreateReport(BenchmarkCase benchmarkCase, string result)
     {
-      var generateResult = GenerateResult.Success(ArtifactsPaths.Empty, Array.Empty<string>(), noAcknowledgments: true);
+      var generateResult = GenerateResult.Success(ArtifactsPaths.Empty, Array.Empty<string>());
       var buildResult = BuildResult.Success(generateResult);
-      var executeResult = new ExecuteResult(true, 0, 0, result.Replace("\r", "").Split('\n'), Array.Empty<string>(), launchIndex: 0);
+      var resultLines = result.Replace("\r", "").Split('\n');
+      var executeResult = new ExecuteResult(true, 0, 0, resultLines.Where(r => !r.StartsWith("//")).ToArray(), resultLines.Where(r => r.StartsWith("//")).ToArray(), [], launchIndex: 0);
       return new BenchmarkReport(
         true,
         benchmarkCase,
         generateResult,
         buildResult,
-        new List<ExecuteResult> { executeResult },
-        Array.Empty<Metric>());
+        [executeResult],
+        []);
     }
 
     [LongRunJob]
