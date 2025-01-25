@@ -24,13 +24,13 @@ namespace Anixe.QualityTools.Test.Benchmark
           logFilePath: "",
           totalTime: TimeSpan.FromMinutes(1),
           cultureInfo: CultureInfo.InvariantCulture,
-          validationErrors: ImmutableArray<ValidationError>.Empty,
-          columnHidingRules: ImmutableArray<BenchmarkDotNet.Columns.IColumnHidingRule>.Empty);
+          validationErrors: [],
+          columnHidingRules: []);
     }
 
     private static BenchmarkReport CreateReport(BenchmarkCase benchmarkCase, string result)
     {
-      var generateResult = GenerateResult.Success(ArtifactsPaths.Empty, Array.Empty<string>());
+      var generateResult = GenerateResult.Success(ArtifactsPaths.Empty, []);
       var buildResult = BuildResult.Success(generateResult);
       var resultLines = result.Replace("\r", "").Split('\n');
       var executeResult = new ExecuteResult(true, 0, 0, resultLines.Where(r => !r.StartsWith("//")).ToArray(), resultLines.Where(r => r.StartsWith("//")).ToArray(), [], launchIndex: 0);

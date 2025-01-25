@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Anixe.QualityTools.Test
@@ -364,7 +362,7 @@ Token of path 'a.b' of type Integer is different from 'a.b' of type Object
       var ex = Record.Exception(() => AssertHelper.AreJsonObjectsSemanticallyEqual(
         a,
         b,
-        new List<string> { "b" }));
+        ["b"]));
 
       Assert.Null(ex);
     }
@@ -391,7 +389,7 @@ Token of path 'a.b' of type Integer is different from 'a.b' of type Object
       var ex = Record.Exception(() => AssertHelper.AreJsonObjectsSemanticallyEqual(
         a,
         b,
-        new List<string> { "a.b" }));
+        ["a.b"]));
 
       Assert.Null(ex);
     }
@@ -424,7 +422,7 @@ Token of path 'a.b' of type Integer is different from 'a.b' of type Object
       var ex = Record.Exception(() => AssertHelper.AreJsonObjectsSemanticallyEqual(
         a,
         b,
-        new List<string> { "a.b[1]" }));
+        ["a.b[1]"]));
 
       Assert.Null(ex);
     }
@@ -457,7 +455,7 @@ Token of path 'a.b' of type Integer is different from 'a.b' of type Object
       var ex = Record.Exception(() => AssertHelper.AreJsonObjectsSemanticallyEqual(
         a,
         b,
-        new List<string> { "a.b[0]" }));
+        ["a.b[0]"]));
 
       Assert.NotNull(ex);
 
@@ -495,8 +493,7 @@ Expected: 2
 Actual: 3
 ", ex.Message, ignoreLineEndingDifferences: true);
     }
-    
-    
+
     [Fact]
     public void AreJsonObjectsSemanticallyEqual_Should_Fail_Assertion_If_Dates_Differ_By_Z_Suffix()
     {
@@ -505,7 +502,7 @@ Actual: 3
       var ex = Record.Exception(() => AssertHelper.AreJsonObjectsSemanticallyEqual(a, b));
       Assert.NotNull(ex);
     }
-    
+
     [Fact]
     public void AreJsonObjectsSemanticallyEqual_Should_Fail_Assertion_If_Dates_Differ_By_Format()
     {

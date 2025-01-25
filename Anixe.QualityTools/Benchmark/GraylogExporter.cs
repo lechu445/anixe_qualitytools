@@ -50,7 +50,7 @@ namespace Anixe.QualityTools.Benchmark
     public IEnumerable<string> ExportToFiles(Summary summary, ILogger consoleLogger)
     {
       ExportToLog(summary, consoleLogger);
-      return Array.Empty<string>();
+      return [];
     }
 
     public void ExportToLog(Summary summary, ILogger logger)
