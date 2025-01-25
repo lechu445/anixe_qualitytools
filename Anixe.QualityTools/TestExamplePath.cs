@@ -71,7 +71,7 @@ namespace Anixe.QualityTools
     public static byte[] ReadAllBytes(Type testCase, string ext = "xml", string? suffix = null)
     {
       var examplePath = GetExamplePath(testCase, ext, suffix);
-      return exampleFilesCache.GetOrAdd(examplePath, LoadAsByteArray);
+      return exampleFilesCache.GetOrAdd(examplePath, File.ReadAllBytes);
     }
 
     public static string[] ReadAllLines(Type testCase, string ext = "xml", string? suffix = null)
@@ -88,8 +88,8 @@ namespace Anixe.QualityTools
 
     public static string ReadAllText(Type testCase, string ext = "xml", string? suffix = null)
     {
-      using var reader = OpenText(testCase, ext, suffix);
-      return reader.ReadToEnd();
+      var examplePath = GetExamplePath(testCase, ext, suffix);
+      return File.ReadAllText(examplePath);
     }
 
     public static Stream OpenRead(Type testCase, string ext = "xml", string? suffix = null)
@@ -129,30 +129,27 @@ namespace Anixe.QualityTools
 
     public static string LoadTestFixture(string ext = "xml", [CallerMemberName] string callerName = "")
     {
-      var frame = new StackFrame(1, true);
-      var t = frame.GetMethod().DeclaringType;
-      if (t.GetInterfaces().Contains(typeof(IAsyncStateMachine)))
-      {
-        t = t.DeclaringType;
-      }
+      var t = GetDeclaringType();
       return ReadAllText(t, ext, callerName);
     }
 
     public static string GetTestFixturePath(string ext = "xml", [CallerMemberName] string callerName = "")
     {
-      var frame = new StackFrame(1, true);
-      var t = frame.GetMethod().DeclaringType;
-      if (t.GetInterfaces().Contains(typeof(IAsyncStateMachine)))
-      {
-        t = t.DeclaringType;
-      }
+      var t = GetDeclaringType();
       var examplePath = GetExamplePath(t, ext, callerName);
       return examplePath;
     }
 
-    private static byte[] LoadAsByteArray(string path)
+    private static Type GetDeclaringType()
     {
-      return File.ReadAllBytes(path);
+      var frame = new StackFrame(2, true);
+      var t = frame.GetMethod()!.DeclaringType!;
+      if (t.GetInterfaces().Contains(typeof(IAsyncStateMachine)))
+      {
+        t = t.DeclaringType!;
+      }
+
+      return t;
     }
   }
 }
