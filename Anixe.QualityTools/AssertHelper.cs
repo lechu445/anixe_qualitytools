@@ -27,15 +27,16 @@ namespace Anixe.QualityTools
       {
         var expectedMsg = expectedXml.ToString();
         var actualMsg = actualXml.ToString();
+        var exceptionMessage = ex.Message;
 
-        var sb = new StringBuilder(expectedMsg.Length + actualMsg.Length + ex.Message.Length + 70)
-          .AppendLine(ex.Message)
+        var sb = new StringBuilder(exceptionMessage.Length + expectedMsg.Length + actualMsg.Length + 70)
+          .AppendLine(exceptionMessage)
           .AppendLine()
           .AppendLine("################### expected:")
-          .AppendLine(expectedXml.ToString())
+          .AppendLine(expectedMsg)
           .AppendLine()
           .AppendLine("################### actual:")
-          .AppendLine(actualXml.ToString());
+          .AppendLine(actualMsg);
 
         throw new Xunit.Sdk.XunitException(sb.ToString());
       }
@@ -61,15 +62,16 @@ namespace Anixe.QualityTools
       {
         var expectedMsg = JsonConvert.SerializeObject(expectedObject, Formatting.Indented);
         var actualMsg = JsonConvert.SerializeObject(actualObject, Formatting.Indented);
+        var exceptionMessage = ex.Message;
 
-        var sb = new StringBuilder(expectedMsg.Length + actualMsg.Length + ex.Message.Length + 70)
+        var sb = new StringBuilder(expectedMsg.Length + actualMsg.Length + exceptionMessage.Length + 70)
           .AppendLine("################### Expected:")
           .AppendLine(expectedMsg)
           .AppendLine()
           .AppendLine("******************* Actual:")
           .AppendLine(actualMsg)
           .AppendLine()
-          .AppendLine(ex.Message);
+          .AppendLine(exceptionMessage);
 
         throw new Xunit.Sdk.XunitException(sb.ToString());
       }
